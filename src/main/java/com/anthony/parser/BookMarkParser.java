@@ -7,6 +7,8 @@ import com.anthony.util.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by CHENDONG239 on 2017-01-23.
@@ -39,9 +41,19 @@ public class BookMarkParser extends Parser {
             return null;
         Pair<String,String> urlTitle=new Pair<>();
         String url=subStr(line,"HREF=\"","\" ADD_DATE");
+        url=url.substring(url.indexOf("htm_data"));
+
         String title=subStr(line,"\">","</A>");
         urlTitle.setKV(url,title);
         return urlTitle;
+    }
+
+    private String filteTitle(String title)
+    {
+        String regEx="[\\/:*?\"<>|]";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(title);
+        return m.replaceAll("").trim();
     }
 
     private String subStr(String src,String begin,String end)
