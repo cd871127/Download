@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by CHENDONG239 on 2017-01-23.
  */
-public class FileResource extends Resource {
+public class FileResource implements Resource {
 
     private File file;
 

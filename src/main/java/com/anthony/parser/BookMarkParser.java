@@ -1,25 +1,25 @@
 package com.anthony.parser;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import com.anthony.resource.Resource;
+
+import java.util.ArrayList;
 
 /**
  * Created by CHENDONG239 on 2017-01-23.
  */
-public class BookMarkParser{
-    private File file;
+public class BookMarkParser extends Parser {
+
     private String dirName;
 
-    public BookMarkParser(String dirName)
-    {
-        this.dirName=dirName;
+    //    BookMarkParser(BookMarkParserBuilder builder)
+//    {}
+    public BookMarkParser(Resource resource, String dirname) {
+        super(resource);
+        this.dirName = dirname;
     }
 
-    private boolean findDir(String line)
-    {
+    private boolean findDir(String line) {
         int index = line.indexOf("FOLDED");
         if (-1 == index)
             return false;
@@ -29,33 +29,33 @@ public class BookMarkParser{
         return true;
     }
 
-    public void parse() {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String tempString = null;
-            // 一次读入一行，直到读入null为文件结束
-            boolean flag ;
-            while ((tempString = reader.readLine()) != null) {
-                //判断文件夹
-                if(flag=findDir(tempString))
-                {
-                    System.out.println("find dir");
-                }else
-                {
-                    continue;
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e1) {
-                }
-            }
-        }
+    private String findUrl(String line)
+    {
+        int index=line.indexOf("</DL><P>");
+        if(-1==index)
+            return null;
+
+        return "";
     }
+
+    public ArrayList<String> parse() {
+        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> content = getResource().getResourceContent();
+        boolean isFindDir = false;
+        int bCount=0;
+        for (String line : content) {
+            if(2==bCount)
+                break;
+            if (!isFindDir) {
+                isFindDir = findDir(line);
+                continue;
+            }
+            System.out.println(line);
+            String url=findUrl(line);
+            if(null==url)
+                ++bCount;
+        }
+        return result;
+    }
+
 }

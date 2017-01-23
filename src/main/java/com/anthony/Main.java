@@ -14,7 +14,8 @@ public class Main {
         System.out.println("start:");
        // "D:\\Users\\chendong239\\Desktop\\Bookmark.html"
         Resource r=new FileResource("D:\\Users\\chendong239\\Desktop\\Bookmark.html");
-        System.out.println(r.getResourceContent());
+        Parser p=new BookMarkParser(r,"Dev");
+        p.parse();
     }
 }
 
