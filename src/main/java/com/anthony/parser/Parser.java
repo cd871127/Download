@@ -8,17 +8,17 @@ import java.util.ArrayList;
  * Created by CHENDONG239 on 2017-01-23.
  */
 public abstract class Parser {
-    public Parser(Resource resource)
+    public Parser(ArrayList<String> content)
     {
-        this.resource=resource;
+        this.content=content;
     }
 
-    protected Resource getResource() {
-        return resource;
+    protected ArrayList<String> getContent() {
+        return content;
     }
 
-    private Resource resource;
-    public abstract ArrayList<String> parse();
+    private ArrayList<String> content;
+    public abstract Object parse();
 
 
 }

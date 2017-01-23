@@ -1,9 +1,6 @@
 package com.anthony.resource;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -26,10 +23,13 @@ public class FileResource implements Resource {
     @Override
     public ArrayList<String> getResourceContent() {
         BufferedReader reader = null;
+
         ArrayList<String> res = new ArrayList<>();
         try {
-            reader = new BufferedReader(new FileReader(file));
-            String tempStr = null;
+            InputStream is = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(is, "utf8");
+            reader = new BufferedReader(isr);
+            String tempStr;
             while ((tempStr = reader.readLine()) != null) {
                 res.add(tempStr);
             }
