@@ -20,6 +20,17 @@ import java.util.Map;
  */
 public class Main {
     public static void main(String[] args) {
+        testPost();
+    }
+
+    private static void testPost()
+    {
+        HttpUtil u=new HttpUtil();
+        u.get("http://www.rmdown.com/link.php?hash=1715931aacbb8a0dd9a190d3b699b894ae9e7dc9a4e");
+    }
+
+    private static void testParse1()
+    {
         FileResource r=new FileResource("src\\main\\resources\\2.html");
         List<String> l=r.getResourceContent();
         String content="";
@@ -27,9 +38,12 @@ public class Main {
         {
             content+=tmp;
         }
-        System.out.println(content);
-//        Parser p= new PostParser(content);
-        Parser p= new RmdownParser(content);
+    }
+
+    private static void testParse2()
+    {
+        FileResource r=new FileResource("D:\\Users\\chendong239\\Desktop\\Bookmark.html");
+        Parser p=new BookMarkParser(r.getResourceContent(),"Gradle");
         System.out.println(p.parse());
     }
 
