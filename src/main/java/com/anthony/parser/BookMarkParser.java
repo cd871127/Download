@@ -1,7 +1,6 @@
 package com.anthony.parser;
 
 
-import com.anthony.resource.Resource;
 import com.anthony.util.Pair;
 
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public class BookMarkParser extends Parser {
         url=url.substring(url.indexOf("htm_data"));
 
         String title=subStr(line,"\">","</A>");
+        title=filteTitle(title);
         urlTitle.setKV(url,title);
         return urlTitle;
     }

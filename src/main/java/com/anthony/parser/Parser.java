@@ -13,6 +13,12 @@ public abstract class Parser {
         this.content=content;
     }
 
+    public Parser(String content)
+    {
+        this.content=new ArrayList<>();
+        this.content.add(content);
+    }
+
     protected ArrayList<String> getContent() {
         return content;
     }
