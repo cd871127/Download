@@ -12,6 +12,7 @@ import javafx.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,19 @@ public class Main {
     private static void testPost()
     {
         HttpUtil u=new HttpUtil();
-        u.get("http://www.rmdown.com/link.php?hash=1715931aacbb8a0dd9a190d3b699b894ae9e7dc9a4e");
+        String content=u.get("http://www.rmdown.com/link.php?hash=1715931aacbb8a0dd9a190d3b699b894ae9e7dc9a4e");
+//        System.out.println(content);
+        Parser p=new RmdownParser(content);
+        Map paraMap=(HashMap<String,String>)p.parse();
+        String url="http://www.rmdown.com/download.php?";
+        url+="ref="+paraMap.get("ref")+"&reff="+paraMap.get("reff");
+        System.out.println(url);
+        try {
+            u.post(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static void testParse1()
@@ -38,6 +51,8 @@ public class Main {
         {
             content+=tmp;
         }
+        Parser p=new RmdownParser(content);
+        System.out.println(p.parse());
     }
 
     private static void testParse2()
