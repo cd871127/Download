@@ -85,8 +85,9 @@ public class HttpUtil {
             for (Header h : headers)
                 System.out.println(h.getName() + ": " + h.getValue());
             entity = response.getEntity();
-            res = EntityUtils.toString(entity, "utf8");
+            res = EntityUtils.toString(entity, "GBK");
         } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             try {
                 EntityUtils.consume(entity);
@@ -101,8 +102,10 @@ public class HttpUtil {
     }
 
     private CloseableHttpClient setProxyInfo() {
-        HttpHost proxy = new HttpHost("10.17.171.11", 8080);
-        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-        return HttpClients.custom().setRoutePlanner(routePlanner).build();
+//        HttpHost proxy = new HttpHost("10.17.171.11", 8080);
+//        DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
+//        return HttpClients.custom().setRoutePlanner(routePlanner).build();
+        return HttpClients.createDefault();
+
     }
 }

@@ -16,7 +16,12 @@ import java.util.Map;
  */
 public class Main {
     public static void main(String[] args) {
-        testPost();
+        HttpUtil u = new HttpUtil();
+//        String content = u.get("http://www.rmdown.com/link.php?hash=1715931aacbb8a0dd9a190d3b699b894ae9e7dc9a4e");
+        String content = u.get("http://cl.gtta.pw/index.php");
+
+        System.out.println(content);
+
     }
 
     private static void testPost() {
