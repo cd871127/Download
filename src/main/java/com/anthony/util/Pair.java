@@ -10,7 +10,7 @@ public class Pair<K, V> {
     }
 
     public Pair(K key, V value) {
-        setKV(key,value);
+        setKV(key, value);
     }
 
     private K key;
@@ -37,8 +37,8 @@ public class Pair<K, V> {
         map.put(key, value);
         return map;
     }
-    public Pair<K, V>setKV(K key, V value)
-    {
+
+    public Pair<K, V> setKV(K key, V value) {
         setKey(key);
         setValue(value);
         return this;
