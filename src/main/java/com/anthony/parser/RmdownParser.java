@@ -25,20 +25,12 @@ public class RmdownParser extends Parser {
         paraMap.put("reff", reff);
         Torrent torrent=null;
         torrent.setDownloadUrl("");
-        try {
-            getOut().putSingleResource(torrent);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        getOut().putSingleResource(torrent);
     }
 
     private String getValue(String posStr, String attr) {
-        Torrent torrent = null;
-        try {
-            torrent = getIn().getSingleResource();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Torrent torrent =getIn().getSingleResource();
+
         String content = torrent.getDownloadPage();
         int index = content.indexOf(posStr) + posStr.length();
         if (-1 == index)

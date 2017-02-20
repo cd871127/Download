@@ -18,21 +18,12 @@ public class PostParser extends Parser {
     @Override
     public void parse() {
         Resource in=getIn();
-        Torrent torrent=null;
-        try {
-            torrent=in.getSingleResource();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Torrent torrent=in.getSingleResource();
         String content = torrent.getPostPage();
         int index = content.indexOf(prefix);
         content = content.substring(index, index + prefix.length() + HASH_LENGTH);
         torrent.getDownloadUrl();
         Resource out=getOut();
-        try {
-            out.putSingleResource(torrent);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        out.putSingleResource(torrent);
     }
 }

@@ -2,15 +2,31 @@ package com.anthony.resource;
 
 import com.anthony.beans.Torrent;
 
-import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by CHENDONG239 on 2017-01-23.
  */
-public interface Resource {
+public abstract class Resource {
 
-    Torrent getSingleResource() throws InterruptedException;
+    private LinkedBlockingQueue<Torrent> resourceQueue = new LinkedBlockingQueue<>();
 
-    void putSingleResource(Torrent torrent) throws InterruptedException;
+    public Torrent getSingleResource() {
+        Torrent torrent = null;
+        try {
+            torrent = resourceQueue.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return torrent;
+    }
+
+    public void putSingleResource(Torrent torrent) {
+        try {
+            resourceQueue.put(torrent);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

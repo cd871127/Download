@@ -47,7 +47,7 @@ public class BookMarkParser extends Parser {
         String title = subStr(line, "\">", "</A>");
         title = filteTitle(title);
         torrent.setTitle(title);
-        torrent.setUrl(url);
+        torrent.setPostPageUrl(url);
         return torrent;
     }
 
@@ -78,11 +78,7 @@ public class BookMarkParser extends Parser {
                 ++nullCount;
                 continue;
             }
-            try {
-                out.putSingleResource(torrent);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            out.putSingleResource(torrent);
         }
 
     }

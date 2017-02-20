@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * Created by CHENDONG239 on 2017-02-20.
  */
-public class BookMark implements Resource {
+public class BookMark extends Resource {
 
     private static BookMark bookMark=null;
 
@@ -22,20 +22,5 @@ public class BookMark implements Resource {
     private BookMark(){
 
     }
-
-    private LinkedBlockingQueue<Torrent> bookMarkQueue=new LinkedBlockingQueue<>();
-
-
-    @Override
-    public Torrent getSingleResource() throws InterruptedException {
-
-        return bookMarkQueue.take();
-    }
-
-    @Override
-    public void putSingleResource(Torrent torrent) throws InterruptedException {
-        bookMarkQueue.put(torrent);
-    }
-
 
 }
