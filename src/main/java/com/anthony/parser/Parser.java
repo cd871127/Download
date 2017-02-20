@@ -1,27 +1,43 @@
 package com.anthony.parser;
 
+import com.anthony.resource.Resource;
+
 import java.util.ArrayList;
 
 /**
  * Created by CHENDONG239 on 2017-01-23.
  */
-public abstract class Parser {
-    public Parser(ArrayList<String> content) {
-        this.content = content;
+public abstract class Parser implements Runnable{
+    private Resource in;
+
+    public Resource getIn() {
+        return in;
     }
 
-    public Parser(String content) {
-        this.content = new ArrayList<>();
-        this.content.add(content);
+    public void setIn(Resource in) {
+        this.in = in;
     }
 
-    protected ArrayList<String> getContent() {
-        return content;
+    public Resource getOut() {
+        return out;
     }
 
-    private ArrayList<String> content;
+    public void setOut(Resource out) {
+        this.out = out;
+    }
 
-    public abstract Object parse();
+    private Resource out;
 
+    public Parser(Resource in,Resource out)
+    {
+        this.in=in;
+        this.out=out;
+    }
 
+    public abstract void parse();
+
+    @Override
+    public void run() {
+        parse();
+    }
 }

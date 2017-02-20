@@ -1,4 +1,4 @@
-package com.anthony.resource;
+package com.anthony.util;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,11 +6,11 @@ import java.util.ArrayList;
 /**
  * Created by CHENDONG239 on 2017-01-23.
  */
-public class FileResource implements Resource {
+public class BookMarkFile {
 
     private File file;
 
-    public FileResource(String fileName) {
+    public BookMarkFile(String fileName) {
         openFile(fileName);
     }
 
@@ -20,7 +20,6 @@ public class FileResource implements Resource {
         file = new File(fileName);
     }
 
-    @Override
     public ArrayList<String> getResourceContent() {
         BufferedReader reader = null;
 

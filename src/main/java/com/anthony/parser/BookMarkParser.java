@@ -1,11 +1,11 @@
 package com.anthony.parser;
 
 
-import com.anthony.util.Pair;
+import com.anthony.beans.Torrent;
+import com.anthony.resource.Resource;
+import com.anthony.util.BookMarkFile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,13 +14,17 @@ import java.util.regex.Pattern;
  */
 public class BookMarkParser extends Parser {
 
+    private ArrayList<String> content;
     private String dirName;
 
 
-    public BookMarkParser(ArrayList<String> content, String dirname) {
-        super(content);
+    public BookMarkParser(Resource in, Resource out, String bookMarkName, String dirname) {
+        super(in, out);
         this.dirName = dirname;
+        BookMarkFile bookMarkFile = new BookMarkFile(bookMarkName);
+        content = bookMarkFile.getResourceContent();
     }
+
 
     private boolean findDir(String line) {
         int index = line.indexOf("FOLDED");
@@ -32,19 +36,19 @@ public class BookMarkParser extends Parser {
         return true;
     }
 
-    private Pair<String, String> findUrl(String line) {
-
+    private Torrent findUrl(String line) {
         int index = line.indexOf("<DT><A");
         if (-1 == index)
             return null;
-        Pair<String, String> urlTitle = new Pair<>();
+        Torrent torrent = new Torrent();
         String url = subStr(line, "HREF=\"", "\" ADD_DATE");
         url = url.substring(url.indexOf("htm_data"));
 
         String title = subStr(line, "\">", "</A>");
         title = filteTitle(title);
-        urlTitle.setKV(url, title);
-        return urlTitle;
+        torrent.setTitle(title);
+        torrent.setUrl(url);
+        return torrent;
     }
 
     private String filteTitle(String title) {
@@ -58,10 +62,8 @@ public class BookMarkParser extends Parser {
         return src.substring(src.indexOf(begin) + begin.length(), src.indexOf(end));
     }
 
-    @Override
-    public Object parse() {
-        Map<String, String> result = new HashMap<>();
-        ArrayList<String> content = getContent();
+    public void parse() {
+        Resource out = getOut();
         boolean isFindDir = false;
         int nullCount = 0;
         for (String line : content) {
@@ -71,15 +73,19 @@ public class BookMarkParser extends Parser {
                 isFindDir = findDir(line);
                 continue;
             }
-            Pair<String, String> urlTitle = findUrl(line);
-            if (null == urlTitle) {
+            Torrent torrent = findUrl(line);
+            if (null == torrent) {
                 ++nullCount;
                 continue;
             }
-            urlTitle.addToMap(result);
-            System.out.println(urlTitle);
+            try {
+                out.putSingleResource(torrent);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        return result;
+
     }
+
 
 }
