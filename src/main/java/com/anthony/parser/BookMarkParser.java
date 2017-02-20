@@ -17,14 +17,12 @@ public class BookMarkParser extends Parser {
     private ArrayList<String> content;
     private String dirName;
 
-
     public BookMarkParser(Resource in, Resource out, String bookMarkName, String dirname) {
         super(in, out);
         this.dirName = dirname;
         BookMarkFile bookMarkFile = new BookMarkFile(bookMarkName);
         content = bookMarkFile.getResourceContent();
     }
-
 
     private boolean findDir(String line) {
         int index = line.indexOf("FOLDED");
@@ -82,6 +80,5 @@ public class BookMarkParser extends Parser {
         }
 
     }
-
 
 }
