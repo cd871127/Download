@@ -1,28 +1,30 @@
-package com.anthony.parser;
+package com.anthony.component.parser;
 
 import com.anthony.beans.Torrent;
-import com.anthony.resource.Resource;
+import com.anthony.component.Component;
+import com.anthony.component.resource.Resource;
 
 /**
  * Created by CHENDONG239 on 2017-01-24.
  */
-public class PostParser extends Parser {
+public class PostParser extends Component {
 
     private static final String prefix = "http://www.rmdown.com/link.php?hash=";
     private static final int HASH_LENGTH = 43;
 
-    public PostParser(Resource in,Resource out) {
-        super(in,out);
+    public PostParser() {
+        setIn(Resource.resourceMap.get("postContent"));
+        setOut(Resource.resourceMap.get("downloadUrl"));
     }
 
     @Override
-    public void parse() {
+    public void execute() {
         Resource in=getIn();
         Torrent torrent=in.getSingleResource();
         String content = torrent.getPostPage();
         int index = content.indexOf(prefix);
         content = content.substring(index, index + prefix.length() + HASH_LENGTH);
-        torrent.getDownloadUrl();
+        torrent.setDownloadUrl(content);
         Resource out=getOut();
         out.putSingleResource(torrent);
     }

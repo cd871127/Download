@@ -11,7 +11,7 @@ public class Config {
     private String propertiesPath="/config.properties";
     private static Config config=null;
 
-    public Config getInstance(){
+    public static Config getInstance(){
         if(null==config)
             config=new Config();
         return config;

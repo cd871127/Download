@@ -6,9 +6,9 @@ package com.anthony.beans;
 public class Torrent {
     private String postPageUrl;
     private String title;
-    private String downloadPageUrl;
+    private String rmdownUrl;
+    private String rmdownPage;
     private String postPage;
-    private String downloadPage;
     private String downloadUrl;
 
     public String getPostPageUrl() {
@@ -27,12 +27,20 @@ public class Torrent {
         this.title = title;
     }
 
-    public String getDownloadPageUrl() {
-        return downloadPageUrl;
+    public String getRmdownUrl() {
+        return rmdownUrl;
     }
 
-    public void setDownloadPageUrl(String downloadPageUrl) {
-        this.downloadPageUrl = downloadPageUrl;
+    public void setRmdownUrl(String rmdownUrl) {
+        this.rmdownUrl = rmdownUrl;
+    }
+
+    public String getRmdownPage() {
+        return rmdownPage;
+    }
+
+    public void setRmdownPage(String rmdownPage) {
+        this.rmdownPage = rmdownPage;
     }
 
     public String getPostPage() {
@@ -41,14 +49,6 @@ public class Torrent {
 
     public void setPostPage(String postPage) {
         this.postPage = postPage;
-    }
-
-    public String getDownloadPage() {
-        return downloadPage;
-    }
-
-    public void setDownloadPage(String downloadPage) {
-        this.downloadPage = downloadPage;
     }
 
     public String getDownloadUrl() {
@@ -64,7 +64,7 @@ public class Torrent {
         return "Torrent{" +
                 "postPageUrl='" + postPageUrl + '\'' +
                 ", title='" + title + '\'' +
-                ", downloadPageUrl='" + downloadPageUrl + '\'' +
+                ", rmdownUrl='" + rmdownUrl + '\'' +
                 ", downloadUrl='" + downloadUrl + '\'' +
                 '}';
     }

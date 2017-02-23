@@ -1,9 +1,11 @@
-package com.anthony.parser;
+package com.anthony.component.parser;
 
 
 import com.anthony.beans.Torrent;
-import com.anthony.resource.Resource;
+import com.anthony.component.Component;
+import com.anthony.component.resource.Resource;
 import com.anthony.util.BookMarkFile;
+import com.anthony.util.Config;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -12,16 +14,16 @@ import java.util.regex.Pattern;
 /**
  * Created by CHENDONG239 on 2017-01-23.
  */
-public class BookMarkParser extends Parser {
+public class BookMarkParser extends Component {
 
     private ArrayList<String> content;
     private String dirName;
 
-    public BookMarkParser(Resource in, Resource out, String bookMarkName, String dirname) {
-        super(in, out);
-        this.dirName = dirname;
-        BookMarkFile bookMarkFile = new BookMarkFile(bookMarkName);
+    public BookMarkParser() {
+        this.dirName = Config.getInstance().getProperties("BOOKMARK_DIR");
+        BookMarkFile bookMarkFile = new BookMarkFile();
         content = bookMarkFile.getResourceContent();
+        setOut(Resource.resourceMap.get("postUrl"));
     }
 
     private boolean findDir(String line) {
@@ -40,6 +42,9 @@ public class BookMarkParser extends Parser {
             return null;
         Torrent torrent = new Torrent();
         String url = subStr(line, "HREF=\"", "\" ADD_DATE");
+        int urlStartIndex=url.indexOf("htm_data");
+        if(-1==urlStartIndex)
+            return null;
         url = url.substring(url.indexOf("htm_data"));
 
         String title = subStr(line, "\">", "</A>");
@@ -60,20 +65,18 @@ public class BookMarkParser extends Parser {
         return src.substring(src.indexOf(begin) + begin.length(), src.indexOf(end));
     }
 
-    public void parse() {
+    public void execute() {
         Resource out = getOut();
         boolean isFindDir = false;
-        int nullCount = 0;
         for (String line : content) {
-            if (2 == nullCount)
-                break;
             if (!isFindDir) {
                 isFindDir = findDir(line);
                 continue;
             }
+            if(-1!=line.indexOf("</DL><P>"))
+                break;
             Torrent torrent = findUrl(line);
             if (null == torrent) {
-                ++nullCount;
                 continue;
             }
             out.putSingleResource(torrent);

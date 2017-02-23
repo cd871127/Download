@@ -10,16 +10,18 @@ public class BookMarkFile {
 
     private File file;
 
-    public BookMarkFile(String fileName) {
-        openFile(fileName);
+    public BookMarkFile() {
+        openFile();
     }
 
-    private void openFile(String fileName) {
+    private void openFile() {
+        String fileName=Config.getInstance().getProperties("BOOKMARK_FILE");
         if (null == fileName && !"".equals(""))
             return;//error
         file = new File(fileName);
     }
 
+    //按行读取文件,返回list
     public ArrayList<String> getResourceContent() {
         BufferedReader reader = null;
 
