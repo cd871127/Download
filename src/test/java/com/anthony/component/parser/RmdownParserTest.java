@@ -29,8 +29,8 @@ public class RmdownParserTest {
             content+=tmp;
         }
         reader.close();
-        t.setPostPage(content);
-        Resource.resourceMap.get("downloadContent").putSingleResource(t);
+        t.setRmdownPage(content);
+        Resource.resourceMap.get("rmdownContent").putSingleResource(t);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class RmdownParserTest {
         RmdownParser postParser=new RmdownParser();
         postParser.execute();
         Torrent t=Resource.resourceMap.get("downloadUrl").getSingleResource();
-        System.out.println(t);
+        System.out.println(t.getDownloadUrl());
     }
 
 }

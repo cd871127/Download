@@ -27,4 +27,19 @@ public class FileIO {
         }
         return true;
     }
+
+    static public void writeLine(String fileName,String line)
+    {
+        try {
+            FileWriter fw=new FileWriter(fileName,true);
+            PrintWriter pw = new PrintWriter(fw);
+            pw.println(line);
+            pw.flush();
+            fw.flush();
+            pw.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

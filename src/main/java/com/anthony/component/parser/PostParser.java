@@ -14,7 +14,7 @@ public class PostParser extends Component {
 
     public PostParser() {
         setIn(Resource.resourceMap.get("postContent"));
-        setOut(Resource.resourceMap.get("downloadUrl"));
+        setOut(Resource.resourceMap.get("rmdownUrl"));
     }
 
     @Override
@@ -24,7 +24,7 @@ public class PostParser extends Component {
         String content = torrent.getPostPage();
         int index = content.indexOf(prefix);
         content = content.substring(index, index + prefix.length() + HASH_LENGTH);
-        torrent.setDownloadUrl(content);
+        torrent.setRmdownUrl(content);
         Resource out=getOut();
         out.putSingleResource(torrent);
     }

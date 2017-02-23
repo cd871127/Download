@@ -25,7 +25,7 @@ public class RmdownParser extends Component {
     @Override
     public void execute() {
         Torrent torrent =getIn().getSingleResource();
-        String content = torrent.getDownloadPage();
+        String content = torrent.getRmdownPage();
 
         String ref = getValue("=\"ref\"", "=\"",content);
         String reff = getValue("=\"reff\"", "=\"",content);

@@ -40,4 +40,9 @@ public class Resource {
         }
     }
 
+    public int size()
+    {
+        return resourceQueue.size();
+    }
+
 }
